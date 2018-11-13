@@ -1,0 +1,78 @@
+\documentclass[10pt]{article}
+%
+%Load the myriad packages
+\usepackage{amssymb,amsmath}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+%\usepackage{textcomp}
+%\usepackage{graphicx}
+%\usepackage[dvips]{graphicx}
+%\usepackage{tikz}
+\usepackage{subfig}    % for multi-figure figures
+%\usepackage[numbers, super]{natbib}
+\usepackage{natbib}
+%\usepackage{pdflscape}
+%\usepackage{rotating}
+%\usepackage{grffile} %spaces in file names
+%\usepackage{parskip}
+%\usepackage[T1]{fontenc} %for sc and bf
+\usepackage{bigstrut}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{framed}
+% Optional for code samples
+\usepackage{listings}
+\usepackage{multirow}
+%
+% misc.
+\newcommand{\keff}{\ensuremath{{k_\mathrm{eff}}}}
+\newcommand{\alphaT}{\ensuremath{{\alpha_{_T}}}}
+\newcommand{\SN}{\ensuremath{{\text{S}_\text{N}}}}
+%Note: tarticle has ``several'' changes from article
+%in this vein.
+% some simplifying commands
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\ie}{{\it i.e.}}
+\newcommand{\etal}{{\it et al.}}
+\newcommand{\E}{\mathcal{E}}
+% derivative - d
+\newcommand{\ud}{\,\mathrm{d}}
+% bold unit vector n-hat
+\newcommand{\nhat}{\hat{\bf n}}
+\newcommand{\tensor}[1]{\mathcal{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\varvec}[1]{\boldsymbol{#1}}
+\newcommand{\om}{\boldsymbol{\Omega}}
+\newcommand{\order}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+
+\newlength \figwidth
+\setlength \figwidth {1\textwidth}
+
+%
+\begin{document}
+
+\title{OpenMC: First Instructions and Link to Sample Data Sets \\Student Cluster Competition 2018}
+
+\maketitle
+
+\begin{enumerate}
+\item One application used in the 2018 SCC is OpenMC, an open-source Monte Carlo nuclear neutronics code originally created at MIT targeted at simulation of nuclear reactors
+\item Documentation on OpenMC is available at \url{http://openmc.readthedocs.io/en/stable/}
+\item The source code for OpenMC may be downloaded at \url{https://github.com/mit-crpg/openmc}, or by using \linebreak\verb+git clone https://github.com/mit-crpg/openmc.git+. Use  version 0.10.0 (\verb+git checkout tags/v0.10.0+).
+\item Building OpenMC will require third-party software, including
+    \begin{itemize}
+    \item A compiler with Fortran support such as such gcc
+     \item HDF5 compiled with Fortran support
+     \item Python 3, for scripts included with OpenMC
+    \end{itemize}
+\item The test suite is useful for familiarizing oneself with input files for the code, running the code and ensuring correctness, and with exploring output files and format. The test suite is at \url{https://github.com/mit-crpg/openmc/tree/develop/tests}. {\color{red} A useful example is}  \url{https://github.com/mit-crpg/openmc/tree/develop/examples/xml/pincell}
+\item Relevant theory for OpenMC may be found at \url{http://openmc.readthedocs.io/en/stable/methods/index.html}
+\item OpenMC requires nuclear data in a specific format. The competition will use data from \url{http://www.nndc.bnl.gov/endf/b7.1/acefiles.html}. A script to download and prepare the data for OpenMC is referenced in {\footnotesize\url{http://openmc.readthedocs.io/en/stable/usersguide/cross_sections.html#using-endf-b-vii-1-cross-sections-from-nndc}}.
+\item OpenMC is CPU-only. There is no GPU port of OpenMC. We do not recommend you develop such a GPU port, though we do not forbid it. If you do develop a GPU port, you are responsible for ensuring correctness, which we will test. Any changes you make to OpenMC (not recommended) must be posted publicly after the competition.
+\end{enumerate}
+
+The two most difficult steps when building OpenMC are building a parallel version of HDF5 with Fortran support and obtaining the nuclear data needed as an input.
+If building HDF5 manually, heed the instructions in the OpenMC documentation (\url{http://openmc.readthedocs.io/en/stable/usersguide/install.html#building-from-source}). Once the nuclear data has been downloaded and processed using \verb+/path/to/openmc/scripts/openmc-get-nndc-data+, set the \verb+OPENMC_CROSS_SECTIONS+ variable to point to \verb+nndc_hdf5/cross_sections.xml+.
+
+
+\end{document}

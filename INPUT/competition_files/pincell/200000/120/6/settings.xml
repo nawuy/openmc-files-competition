@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<settings>
+  <run_mode>eigenvalue</run_mode>
+  <particles>200000</particles>
+  <batches>130</batches>
+  <inactive>10</inactive>
+  <source strength="1.0">
+    <space type="fission">
+      <parameters>-0.62992 -0.62992 -1 0.62992 0.62992 1</parameters>
+    </space>
+  </source>
+  <seed>600001</seed>
+  <mesh id="35" type="regular">
+    <dimension>10 10 1</dimension>
+    <lower_left>-0.39218 -0.39218 -1e+50</lower_left>
+    <upper_right>0.39218 0.39218 1e+50</upper_right>
+  </mesh>
+  <entropy_mesh>35</entropy_mesh>
+</settings>

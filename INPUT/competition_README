@@ -1,0 +1,121 @@
+===================
+Directory Structure
+===================
+
+Approximate space usage for INPUT is listed as follows:
+(space usage of input files / space usage after OpenMC is run in this folder, including tallies.out and summary.h5, which are not used in this test)
+
+The directory structure is as follows:
+
+OpenMC
+  INPUT (3.2 GB / 10.4 GB)
+    README
+    assembly (1.6 GB / 3.4 GB)
+      Folders numbered 1 - 25 (65.3 MB / 137.7 MB each)
+        geometry, materials, settings, tallies.xml
+    assembly_large (1.6 GB / 4.6 GB)
+      Folders numbered 1 - 25 (65.3 MB / 184.5 MB each)
+        geometry, materials, settings, tallies.xml
+    pincell (980.7 kB / 2.4 GB)
+      100000 (588.4 kB / 579.6 MB)
+        120 (196.1 kB / 193.1 MB)
+          Folders numbered 1 - 25 (7.8 kB / 7.7 MB each)
+            geometry, materials, settings, tallies.xml
+        240 (196.1 kB / 193.1 MB)
+          Folders numbered 1 - 25 (7.8 kB / 7.7 MB each)
+            geometry, materials, settings, tallies.xml
+        960 (196.1 kB / 193.4 MB)
+          Folders numbered 1 - 25 (7.8 kB / 7.7 MB each)
+            geometry, materials, settings, tallies.xml
+      200000 (196.1 kB / 373.1 MB)
+        120 (196.1 kB / 373.1 MB)
+          Folders numbered 1 - 25 (7.8 kB / 14.9 MB each)
+            geometry, materials, settings, tallies.xml
+      800000 (196.1 kB / 1.5 GB)
+        120 (196.1 kB / 1.5 GB)
+          Folders numbered 1 - 25 (7.8 kB / 58.1 MB each)
+            geometry, materials, settings, tallies.xml
+  OUTPUT (5.0 GB)
+    assembly (682.5 MB)
+      Folders numbered 1 - 25 (27.3 MB each)
+        statepoint.200.h5
+    assembly_large (1.9 GB)
+      Folders numbered 1 - 25 (74.1 MB each)
+        statepoint.200.h5
+    pincell (2.4 GB)
+      100000 (547.5 MB)
+        120 (182.5 MB)
+          Folders numbered 1 - 25 (7.3 MB each)
+            statepoint.130.h5
+        240 (182.5 MB)
+          Folders numbered 1 - 25 (7.3 MB each)
+            statepoint.250.h5
+        960 (182.5 MB)
+          Folders numbered 1 - 25 (7.3 MB each)
+            statepoint.970.h5
+      200000 (362.5 MB)
+        120 (362.5 MB)
+          Folders numbered 1 - 25 (14.5 MB each)
+            statepoint.130.h5
+      800000 (1442.5 MB)
+        120 (1442.5 MB)
+          Folders numbered 1 - 25 (57.7 MB each)
+            statepoint.130.h5
+
+The test script is fine if extra files are left in the OUTPUT directory.  In addition, the directory structures are identical between the INPUT and OUTPUT folders.  As such, it would be fine to copy the contents of your working copy of INPUT to OUTPUT upon completion (or throughout simulation).
+
+==============
+Scoring System
+==============
+
+Scores are based 80% on simulations completed (see below), and 20% on interview.
+
+==================
+Simulation - (80%)
+==================
+
+Version of OpenMC to use - v0.10.0
+Version of HDF5 to use - 1.8 or newer (including 1.10)
+
+See precompetition document for explanation of use and for examples.
+
+There are 175 simulations in total for OpenMC.  This corresponds to 7 different simulation problems repeated 25 times with different random number sequences.  We do not anticipate that any team will complete all simulations with the resources available.  As such, scores for this portion will be normalized based on the team that completes the most of them.
+
+For each problem, OpenMC should be run.  OpenMC will generate a statepoint.NNN.h5 at the end of simulation (where NNN is the number of active batches, see above).  This file should be copied to the corresponding location in OUTPUT.  So, if the simulation folder is INPUT/assembly/1/, the statepoint should be placed at OUTPUT/assembly/1/statepoint.200.h5.
+
+These HDF5 statepoint files will be tested by a script for statistical validity.  The distribution of tallies will be analyzed and compared to our reference solution and if the statistical tests pass, the simulation will be scored as correct.
+
+The 7 simulation problems neatly divide into two categories:
+
+----------------------------
+Pincell (8.6% of Simulation)
+----------------------------
+
+This test involves running a pincell (a single reactor fuel pin with reflective boundary conditions) with a number of tallies.  There are 125 simulations with 5 different sets of simulation parameters.
+
+Score breakdown:
+  pincell/100000/120/[1-25]/ - 100k particles/batch, 120 active batches (130 total) - 0.5%, spread over 25 simulations.
+  pincell/100000/240/[1-25]/ - 100k particles/batch, 240 active batches (250 total) - 0.8%, spread over 25 simulations.
+  pincell/100000/960/[1-25]/ - 100k particles/batch, 960 active batches (970 total) - 3.1%, spread over 25 simulations.
+  pincell/200000/120/[1-25]/ - 200k particles/batch, 120 active batches (130 total) - 0.9%, spread over 25 simulations.
+  pincell/800000/120/[1-25]/ - 800k particles/batch, 120 active batches (130 total) - 3.3%, spread over 25 simulations.
+
+------------------------------
+Assembly (24.1% of Simulation)
+------------------------------
+
+In this test, the simple pincell is replaced with a fully 3D fuel assembly with depleted fuel.
+
+Score breakdown:
+  assembly/ - 350k particles/batch, 150 active batches (200 total) - 24.1%, spread over 25 simulations.
+
+------------------------------------
+Assembly Large (67.3% of Simulation)
+------------------------------------
+
+Essentially identical to Assembly above, except with 1 million particles / batch.  Simulating a full nuclear reactor is quite similar to this problem, except that there are roughly 192 assemblies instead of 1.
+
+Score breakdown:
+  assembly_large/ - 1M particles/batch, 150 active batches (200 total) - 67.3%, spread over 25 simulations.
+
+
